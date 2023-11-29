@@ -28,17 +28,15 @@ class MySpider(scrapy.Spider):
 
         # Loop through all <ul> elements
         for link, month, headline, info_list in zip(preview_links, preview_months, preview_headlines, preview_info_lists):
-            link_text = link.css('::text').get()
             link_href = link.css('::attr(href)').get()
-            month_text = month.css('::text').get()
             performer_text = headline.css('::text').get()  # We name the performer's name as Performer(s)
 
             # We extract all <li> elements from the current <ul> element
             info_items = info_list.css('li::text').getall()
 
             # We add all the data to the list
-            output_data.append({'Text': link_text, 'Link': link_href, 'Month': month_text, 'Performer(s)': performer_text, 'Info': info_items})
-            self.log(f"Text: {link_text}, Link: {link_href}, Month: {month_text}, Performer(s): {performer_text}, Info: {info_items}")
+            output_data.append({'Link': link_href, 'Performer(s)': performer_text, 'Date': info_items})
+            self.log(f"Link: {link_href}, Performer(s): {performer_text}, Date: {info_items}")
 
         # We save the links, months, performer(s) and information to the file
         return output_data
