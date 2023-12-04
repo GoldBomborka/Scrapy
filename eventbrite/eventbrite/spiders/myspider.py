@@ -8,7 +8,7 @@ class MySpider(scrapy.Spider):
         'FEEDS': {
             'output.json': {
                 'format': 'json',
-                'overwrite': True,    # If the file already exists, it will overwrite it
+                'overwrite': True,  # If the file already exists, it will overwrite it
             },
         },
     }
