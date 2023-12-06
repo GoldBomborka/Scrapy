@@ -30,12 +30,16 @@ class MySpider(scrapy.Spider):
             if not title:
                 title = ' '.join(box.css('a.link_new::text').getall()).strip()
 
+            # Extract the link ('a.link_new' href attribute)
+            link = box.css('a.link_new::attr(href)').get()
+
             # Single space between each field value
             date = ' '.join(date.split())
             title = ' '.join(title.split())
 
             # Return the cleaned data in a JSON record
             yield {
+                'Link': link if link else "This doesn't has link",
                 'Date': date,
                 'Title': title,
             }
