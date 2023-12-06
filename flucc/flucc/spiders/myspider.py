@@ -22,12 +22,14 @@ class MySpider(scrapy.Spider):
         # Extract interesting data using CSS selectors
         links = response.css('a[href^="/events/"]::attr(href)').getall()
         titles = response.css('div.title-dimension.h-center h4::text').getall()
-        hours = response.css('div.date::text').getall()
+
+        # Specify a more accurate CSS selector for dates
+        dates = response.css('div.day-title h4::text').getall()
 
         # Iterate over the data and yield JSON objects
-        for link, title, hour in zip(links, titles, hours):
+        for link, title, date in zip(links, titles, dates):
             yield {
                 'Link': 'https://www.flucc.at' + link,
                 'Title': title.strip(),
-                'Hour': hour.strip(),
+                'Date': date.strip(),
             }
